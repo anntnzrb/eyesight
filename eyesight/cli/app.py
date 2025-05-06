@@ -7,6 +7,9 @@ from eyesight.config import VideoMode, DEFAULT_MODE
 from eyesight.core.app import EyesightApp
 
 
+from eyesight.config.settings import GEMINI_CONFIG
+
+
 def parse_arguments():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
@@ -33,7 +36,7 @@ async def main(video_mode: VideoMode) -> None:
     Args:
         video_mode: The video mode to use
     """
-    app = EyesightApp(video_mode=video_mode)
+    app = EyesightApp(gemini_config=GEMINI_CONFIG, video_mode=video_mode)
     await app.run()
 
 
