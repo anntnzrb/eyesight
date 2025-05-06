@@ -6,7 +6,16 @@ It is optional, but recommended to be updated as the project evolves.
 
 *
 
-**Guiding Philosophy:** The principles outlined in this document are fundamentally guided by the tenet that concise code, often achieved through functional programming paradigms, leads to a reduced long-term maintenance burden. While immediate readability is a consideration, it is balanced against the benefits of a smaller codebase and can be effectively supported by strong code structure and targeted documentation where needed.
+
+## Guiding Philosophy
+
+The principles outlined in this document are fundamentally guided by the tenet that concise code, often achieved through functional programming paradigms, leads to a reduced long-term maintenance burden. While immediate readability is a consideration, it is balanced against the benefits of a smaller codebase and can be effectively supported by strong code structure and targeted documentation where needed.
+
+## Information Patterns
+
+*   **Prioritizing Current Knowledge:**
+    *   Actively seek and prioritize up-to-date external information for all aspects of development, including technologies, libraries, programming language versions, and best practices. Internal knowledge bases can quickly become outdated; therefore, external, current sources are favored.
+    *   Utilize available mechanisms to access the latest information. For instance, MCPs (Model Context Protocol servers) like Context7 can be employed to search for and retrieve current documentation for libraries and technologies.
 
 ## Coding Patterns
 
