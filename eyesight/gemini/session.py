@@ -1,14 +1,17 @@
 """Gemini API session management for the Eyesight application."""
 
 import asyncio
-from typing import Any
+from typing import Any, TypeAlias, AsyncIterator
 
 from google.genai import types
+from contextlib import asynccontextmanager
 
 from eyesight.config import GEMINI_CONFIG
 
+GeminiLiveSession: TypeAlias = Any
 
-async def send_text(session: Any) -> None:
+
+async def send_text(session: GeminiLiveSession) -> None:
     """Handle text input from user and send to Gemini.
 
     Args:
@@ -29,7 +32,9 @@ async def send_text(session: Any) -> None:
         )
 
 
-async def send_realtime(session: Any, queue: asyncio.Queue) -> None:
+async def send_realtime(
+    session: GeminiLiveSession, queue: asyncio.Queue
+) -> None:
     """Send queued messages to Gemini API.
 
     Args:
@@ -42,7 +47,9 @@ async def send_realtime(session: Any, queue: asyncio.Queue) -> None:
             await session.send_realtime_input(media=msg)
 
 
-async def receive_responses(session: Any, audio_queue: asyncio.Queue) -> None:
+async def receive_responses(
+    session: GeminiLiveSession, audio_queue: asyncio.Queue
+) -> None:
     """Read responses from Gemini API and process them.
 
     Args:
@@ -63,13 +70,15 @@ async def receive_responses(session: Any, audio_queue: asyncio.Queue) -> None:
             audio_queue.get_nowait()
 
 
-async def create_session() -> Any:
-    """Create and return a Gemini API session.
+@asynccontextmanager
+async def create_session() -> AsyncIterator[GeminiLiveSession]:
+    """Create and manage a Gemini API session using an async context manager.
 
-    Returns:
+    Yields:
         Gemini API session
     """
     gemini = GEMINI_CONFIG
-    return await gemini.client.aio.live.connect(
+    async with gemini.client.aio.live.connect(
         model=gemini.model, config=gemini.live_config
-    )
+    ) as session:
+        yield session
