@@ -1,7 +1,7 @@
 # Decision Log
 
 This file records architectural and implementation decisions using a list format.
-2025-05-06 01:40:44 - Log of updates made.
+2025-05-06 02:52:57 - Updated with decision regarding response_modalities type. Log of updates made.
 
 *
 
@@ -22,12 +22,18 @@ This file records architectural and implementation decisions using a list format
 *   Updated the return type hint of `create_session` to `AsyncIterator[GeminiLiveSession]`.
 *   Updated the docstring of `create_session` to reflect its usage as a context manager.
 *
-*
 
-## Rationale 
+## Decision
 
-*
+[2025-05-06 02:52:57] - Used `types.Modality.AUDIO` for `response_modalities` in `eyesight/config/settings.py`.
+
+## Rationale
+
+*   The `google-genai` library's `types.LiveConnectConfig` expects a list of `types.Modality` enum members for the `response_modalities` parameter.
+*   A `TypeError` was raised because a list of strings (e.g., `["audio"]`) was being passed.
 
 ## Implementation Details
 
+*   Modified the `live_config` property within the `GeminiConfig` class in `eyesight/config/settings.py`.
+*   Changed the line `response_modalities=["audio"],` to `response_modalities=[types.Modality.AUDIO],` to correctly use the enum member.
 *

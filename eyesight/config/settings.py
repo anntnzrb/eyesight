@@ -45,7 +45,7 @@ class GeminiConfig:
     def live_config(self) -> types.LiveConnectConfig:
         """Create and return the LiveConnectConfig."""
         return types.LiveConnectConfig(
-            response_modalities=["audio"],
+            response_modalities=[types.Modality.AUDIO],
             speech_config=types.SpeechConfig(
                 voice_config=types.VoiceConfig(
                     prebuilt_voice_config=types.PrebuiltVoiceConfig(
